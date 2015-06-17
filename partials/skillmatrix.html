@@ -5,10 +5,20 @@
 </div>
 <div class="row" ng-repeat='(group, skills) in skillsByGroup'>
 	<div class="col-md-12 skillGroup">
-		<h2>{{group}}</h2>
-		<div class="row skill" ng-repeat='skill in skills'>
-			<div class="col-md-2">{{skill.skill}}</div>
-			<div class="col-md-1" ng-repeat="level in skillLevels"><BUTTON class="btn btn-default skillbutton">{{level}}</BUTTON></div>
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">{{group}}</h3>
+		  </div>
+		  <div class="panel-body">
+			<div class="row skill" ng-repeat='skill in skills'>
+				<div class="col-md-2">{{skill.skill}}</div>
+				<div class="col-md-1" ng-repeat="level in skillLevels"><BUTTON class="btn btn-default skillbutton">{{level}}</BUTTON></div>
+			</div>
+		  </div>
+		  <div class="panel-footer" ng-click="addSkillForm(group)")>
+		  	<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add skill
+			<div class="skillForm" ng-hide="skillForms[group]"><input type="text" ng-model="addingSkill[group]"><BUTTON class="btn btn-default" ng-click="addSkill(addingSkill[group], group)">Add skill</BUTTON></div>
+		  </div>
 		</div>
 	</div>
 </div>

@@ -7,6 +7,10 @@ app.config(['$routeProvider',
           templateUrl: 'partials/skillmatrix.html',
           controller: 'skillmatrixCtrl'
         }).
+        when('/skillMatrix/:id', {
+        	templateUrl: 'partials/personalMatrix.html',
+        	controller: 'personalMatrixCtrl'
+        }).
         otherwise({
           redirectTo: '/skillMatrix'
         });
