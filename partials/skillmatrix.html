@@ -3,3 +3,12 @@
 		<H1>SKILL MATRIX</H1>
 	</div>
 </div>
+<div class="row" ng-repeat='(group, skills) in skillsByGroup'>
+	<div class="col-md-12 skillGroup">
+		<h2>{{group}}</h2>
+		<div class="row skill" ng-repeat='skill in skills'>
+			<div class="col-md-2">{{skill.skill}}</div>
+			<div class="col-md-1" ng-repeat="level in skillLevels"><BUTTON class="btn btn-default skillbutton">{{level}}</BUTTON></div>
+		</div>
+	</div>
+</div>
