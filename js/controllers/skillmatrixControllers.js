@@ -27,9 +27,9 @@ appControllers.controller('skillmatrixCtrl', ['$scope', '$http',
 		$http.post(database + '/addSkill/' + group + '/' + skillName).success(function(reply) {
 			console.log(reply)
 			if($scope.skillsByGroup[group])
-				$scope.skillsByGroup[group].push({"skill": skillName})
+				$scope.skillsByGroup[group][skillName] = skillName;
 			else
-				$scope.skillsByGroup[group] = [{"skill": skillName}]
+				$scope.skillsByGroup[group] = {skillName: skillName}
 		})
 	}
 	
@@ -57,16 +57,44 @@ appControllers.controller('skillmatrixCtrl', ['$scope', '$http',
 		$scope.hideGroupForm = true;
 	}
 	
-	$scope.openDeleteConfirmation = function(type, name) {
+	$scope.openDeleteConfirmation = function(type, name, group) {
 		console.log("Opening delete confirmation for " + name + " " + type);
 		$scope.deleteForm.name = name;
 		$scope.deleteForm.type = type;
+		$scope.deleteForm.group = group;
 		$scope.hideDeleteForm = false;
 	}
 	
 	$scope.deleteItem =  function() {
-		console.log("Deleting " + $scope.deleteForm.type + " " + $scope.deleteForm.name)
+		var type = $scope.deleteForm.type;
+		var name = $scope.deleteForm.name;
+		var group = $scope.deleteForm.group;
+
+		console.log("Deleting " + type + " " + name)
+		switch(type) {
+		    case "group":
+		        for(skillKey in $scope.skillsByGroup[name]) {
+		        	console.log(skillKey)
+		        	var skill = $scope.skillsByGroup[name][skillKey]
+		        	console.log("deleting skill " + skill)
+		        	$http.post(database + "/deleteSkill/" + name + "/" + skill).success(function(data) {
+		        		console.log("Delte successful")
+		        	})
+		        }
+		        delete $scope.skillsByGroup[name]
+		        break;
+		    case "skill":
+		    	$http.post(database + "/deleteSkill/" + group + "/" + name).success(function(data) {
+	        		console.log("Delte successful")
+	        		delete $scope.skillsByGroup[group][name];
+	        		console.log($scope.skillsByGroup[group])
+	        	})
+		        break;
+		    default:
+		        console.log("type not valid")
+		} 
 		$scope.hideDeleteForm = true;
+		$scope.deleteForm = {};
 	}
 	
 	$scope.closeDelteConfirmation = function() {

@@ -1,9 +1,22 @@
+@font-face {
+    font-family: "BDR font";
+    src: "/lib/fonts/Nexa Light.otf";
+}
+
+body {
+	font-family: "BDR font";
+}
+
 .skillbutton {
 	width: 100%;
 }
 
 .skill {
-	font-size: 20px;
+	font-size: 14px;
+}
+
+.panel-title {
+	font-size: 18px;
 }
 
 .FormBackground {
