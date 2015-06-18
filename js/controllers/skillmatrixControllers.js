@@ -2,6 +2,10 @@ var database = "http://localhost:5000"
 
 appControllers.controller('skillmatrixCtrl', ['$scope', '$http',
   function ($scope, $http) {
+	$scope.deleteForm = {};
+	$scope.hideGroupForm = true;
+	$scope.hideDeleteForm = true;
+	$scope.newGroupSkills = {};
 	$scope.skillLevels = ["none", "weak", "average", "strong", "expert"]
     $http.get(database + '/skills').success(function(data) {
     	$scope.skillsByGroup = data;
@@ -22,8 +26,52 @@ appControllers.controller('skillmatrixCtrl', ['$scope', '$http',
 		console.log("Adding skill " + skillName + " to " + group)
 		$http.post(database + '/addSkill/' + group + '/' + skillName).success(function(reply) {
 			console.log(reply)
-			$scope.skillsByGroup[group].push({"skill": skillName})
+			if($scope.skillsByGroup[group])
+				$scope.skillsByGroup[group].push({"skill": skillName})
+			else
+				$scope.skillsByGroup[group] = [{"skill": skillName}]
 		})
+	}
+	
+	$scope.openGroupForm = function() {
+		console.log("Opening add group form");
+		$scope.hideGroupForm = false;
+	}
+	
+	$scope.addSkillToNewGroup = function(skill) {
+		console.log("Adding " + skill + " to new group")
+		$scope.newGroupSkills[skill] = skill
+		console.log($scope.newGroupSkills)
+	}
+	
+	$scope.addGroup = function(name) {
+		console.log("Creating group " + name)
+		console.log("with skills: ")
+		for (skill in $scope.newGroupSkills) {
+			$scope.addSkill(skill, name)
+		}
+		$scope.hideGroupForm = true;
+	}
+	
+	$scope.closeGroupForm = function(){
+		$scope.hideGroupForm = true;
+	}
+	
+	$scope.openDeleteConfirmation = function(type, name) {
+		console.log("Opening delete confirmation for " + name + " " + type);
+		$scope.deleteForm.name = name;
+		$scope.deleteForm.type = type;
+		$scope.hideDeleteForm = false;
+	}
+	
+	$scope.deleteItem =  function() {
+		console.log("Deleting " + $scope.deleteForm.type + " " + $scope.deleteForm.name)
+		$scope.hideDeleteForm = true;
+	}
+	
+	$scope.closeDelteConfirmation = function() {
+		$scope.hideDeleteForm = true;
+		$scope.deleteForm = {};
 	}
 }]);
 

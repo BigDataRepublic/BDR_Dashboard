@@ -1,6 +1,75 @@
+<!-- FORM FOR ADDING GROUPS -->
+<div class="FormBackground" ng-hide="hideGroupForm">
+	<div id="groupForm" class="panel panel-default">
+		<span class="glyphicon glyphicon-remove-sign upperCornerCloser" aria-hidden="false" ng-click="closeGroupForm()"></span>
+	  <div class="panel-heading">
+	    <h3 class="panel-title">ADDING SKILL GROUP</h3>
+	  </div>
+	  <div class="panel-body">
+	  	<div class="row">
+	  		<div class="col-md-12">
+	  			<h2>Group</h2>
+				<input type="text" ng-model="newGroupName">Group name</BR></BR>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Skills</h2>
+			</div>
+		</div>
+		<div class="row" ng-repeat="skill in newGroupSkills">
+			<div class="col-md-12">
+				<span class="skill">{{skill}}</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<input type="text" ng-model="newGroupSkill">Skill name
+	 		</div>
+	 		<div class="col-md-8">
+	 			<BUTTON class="btn btn-default" ng-click="addSkillToNewGroup(newGroupSkill)"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add skill</BUTTON>
+	 		</div>
+	 	</div>
+	 	<div class="row">
+	 		<div class="col-md-12">
+	 			<BUTTON class="btn btn-primary btn-lg" ng-click="addGroup(newGroupName)">Add group</BUTTON>
+	 		</div>
+	 	</div>
+	  </div>
+	</div>
+</div>
+
+<!-- FORM FOR DELETION CONFIRMATION -->
+<div class="FormBackground" ng-hide="hideDeleteForm">
+	<div id="deleteForm">
+		<span class="glyphicon glyphicon-remove-sign upperCornerCloser" aria-hidden="false" ng-click="closeDelteConfirmation()"></span>
+		<div class="FormBody">
+			<div class="row">
+				<div class="col-md-12">
+					Are you sure you want to delete the {{deleteForm.name}} {{deleteForm.type}}?
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<span class="center">
+						<BUTTON class="btn btn-success btn-lg" ng-click="deleteItem()">YES</BUTTON>
+						<BUTTON class="btn btn-danger btn-lg" ng-click="closeDelteConfirmation()">NO</BUTTON>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ACTUAL DASHBOARD -->
 <div class="row">
 	<div class="col-md-12">
 		<H1>SKILL MATRIX</H1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<BUTTON class="btn btn-default" ng-click="openGroupForm()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add group</BUTTON>
 	</div>
 </div>
 <div class="row" ng-repeat='(group, skills) in skillsByGroup'>
@@ -11,8 +80,7 @@
 		  </div>
 		  <div class="panel-body">
 			<div class="row skill" ng-repeat='skill in skills'>
-				<div class="col-md-2">{{skill.skill}}</div>
-				<div class="col-md-1" ng-repeat="level in skillLevels"><BUTTON class="btn btn-default skillbutton">{{level}}</BUTTON></div>
+				<div class="col-md-2 skill">{{skill.skill}}</div><div class="col-md-2"><span class="glyphicon glyphicon-trash iconButton" ng-click="openDeleteConfirmation('skill', skill.skill)"></span></div>
 			</div>
 		  </div>
 		  <div class="panel-footer" ng-click="addSkillForm(group)")>
@@ -20,5 +88,10 @@
 			<div class="skillForm" ng-hide="skillForms[group]"><input type="text" ng-model="addingSkill[group]"><BUTTON class="btn btn-default" ng-click="addSkill(addingSkill[group], group)">Add skill</BUTTON></div>
 		  </div>
 		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<BUTTON class="btn btn-default" ng-click="openGroupForm()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add group</BUTTON>
 	</div>
 </div>
