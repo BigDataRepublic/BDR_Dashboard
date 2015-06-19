@@ -1,7 +1,56 @@
-var database = "http://localhost:5000"
+//var database = "http://localhost:5000"
+var database = "http://bdr-skillmatrix-api.elasticbeanstalk.com"
 
-appControllers.controller('skillmatrixCtrl', ['$scope', '$http',
-  function ($scope, $http) {
+Object.size = function(obj) {
+	var size = 0, key;
+	for(key in obj) {
+		if(obj.hasOwnProperty(key))
+			size++;
+	}
+	return size;
+}
+	
+appControllers.controller('adminLoginCtrl', ['$scope', '$http', '$location', 'Session',
+function ($scope, $http, $location, Session) {
+	$scope.Session = Session;
+	$scope.hideError = true;
+	$scope.checkLogin = function(name, password) {
+		console.log("Logging in")
+		$http.get(database + "/user/"+name+"/password/"+password).success(function(result) {
+			if(Object.size(result) == 0)
+				$scope.hideError = false;
+			else {
+				if (result.id != 0909)
+					$scope.hideError = false;
+				else {
+					Session['id'] = result.id.toString(); 
+					$location.path("/admin")
+				}
+	  		}
+	  		})
+	  	}
+  }]);
+
+appControllers.controller('loginCtrl', ['$scope', '$http', '$location', 'Session',
+  function ($scope, $http, $location, Session) {
+	$scope.Session = Session;
+	$scope.hideError = true;
+	$scope.checkLogin = function(name, password) {
+		$http.get(database + "/user/"+name+"/password/"+password).success(function(result) {
+			if(Object.size(result) == 0)
+				$scope.hideError = false;
+			else {
+				Session['id'] = result.id; 
+				$location.path("/skillMatrix/"+Session.id)
+			}
+		})
+	}
+}]);
+	
+appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session',
+  function ($scope, $http, $location, Session) {
+	if (Session.id != 0909)
+		$location.path("/login")
 	$scope.deleteForm = {};
 	$scope.hideGroupForm = true;
 	$scope.hideDeleteForm = true;

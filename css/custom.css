@@ -57,6 +57,10 @@ body {
 	text-align: center;
 }
 
+#loginScreen {
+	text-align: center;
+}
+
 .iconButton {
 	cursor: pointer;
 }

@@ -1,0 +1,27 @@
+<div id="loginScreen">
+	<div class="row">
+		<div class="col-md-12">
+			<H1>Log in to continue</H1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2 col-md-offset-5">
+			<input type="text" class="form-control" placeholder="Provide your user name" ng-model="account.name">
+		</div>
+	</div>
+	<div class="row" style="margin-top:16px">
+		<div class="col-md-2 col-md-offset-5">
+			<input type="text" class="form-control" placeholder="Provide your password" ng-model="account.password">
+		</div>
+	</div>
+	<div class="row" style="margin-top:16px; color: red" ng-hide="hideError">
+		<div class="col-md-2 col-md-offset-5">
+			Wrong credentials provided
+		</div>
+	</div>
+	<div class="row" style="margin-top:16px">
+		<div class="col-md-2 col-md-offset-5">
+			<BUTTON class="btn btn-default" ng-click="checkLogin(account.name, account.password)">Login</BUTTON>
+		</div>
+	</div>
+</div>
