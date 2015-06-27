@@ -1,21 +1,23 @@
 <div navbar></div>
-<div class="row">
-	<div class="col-md-12">
-		<H1>Skill matrix</H1>
+<div id="skillMatrix">
+	<div class="row">
+		<div class="col-md-12">
+			<H1>Skill matrix <BUTTON class="btn btn-primary" ng-click="print()">Print matrix</BUTTON></H1>
+		</div>
 	</div>
-</div>
-<div class="row" ng-repeat='(group, skills) in skillsByGroup'>
-	<div class="col-md-12 skillGroup">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">{{group}}</h3>
-		  </div>
-		  <div class="panel-body">
-		    <div class="row skill" ng-repeat='(skillIndex, skill) in skills'>
-				<div class="col-md-2">{{skill.skill}}</div>
-				<div class="col-md-1" ng-repeat="(index, level) in skillLevels"><BUTTON class="btn {{buttonStyle(index, skill.score)}} skillbutton" ng-click="scoreSkill(group, skillIndex, index)">{{level}}</BUTTON></div>
+	<div class="row" ng-repeat='(group, skills) in skillsByGroup'>
+		<div class="col-md-12 skillGroup">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">{{group}}</h3>
+			  </div>
+			  <div class="panel-body">
+			    <div class="row skill" ng-repeat='(skillIndex, skill) in skills'>
+					<div class="col-md-2">{{skill.skill}}</div>
+					<div class="col-md-1" ng-repeat="(index, level) in skillLevels"><BUTTON class="btn {{buttonStyle(index, skill.score)}} skillbutton" ng-click="scoreSkill(group, skillIndex, index)">{{level}}</BUTTON></div>
+				</div>
+			  </div>
 			</div>
-		  </div>
 		</div>
 	</div>
 </div>

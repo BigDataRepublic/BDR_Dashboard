@@ -163,8 +163,8 @@ appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParam
 	$scope.navigate = navigate;
 	$scope.Session = Session;
 	var accountID = $routeParams.id
-	if(!(Session.id == accountID || Session.id == 0909))
-		navigate.login()
+	//if(!(Session.id == accountID || Session.id == 0909))
+		//navigate.login()
 	$http.get(database + '/user/'+ accountID + '/name').success(function(data) {
 		$scope.account_name = data.name
 	})
@@ -187,5 +187,9 @@ appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParam
 			console.log(skillName + " scored for " + score);
 			$scope.skillsByGroup[group][skill].score = score;
 		})
+	}
+	
+	$scope.print = function(){
+		window.print()
 	}
 }]);
