@@ -23,7 +23,8 @@ function ($scope, $http, $location, Session) {
 				if (result.id != 0909)
 					$scope.hideError = false;
 				else {
-					Session['id'] = result.id.toString(); 
+					Session['id'] = result.id.toString();
+					Session['type'] = "admin";
 					$location.path("/admin")
 				}
 	  		}
@@ -41,21 +42,25 @@ appControllers.controller('loginCtrl', ['$scope', '$http', '$location', 'Session
 				$scope.hideError = false;
 			else {
 				Session['id'] = result.id; 
+				Session['type'] = "client";
+				Session['name'] = name
 				$location.path("/skillMatrix/"+Session.id)
 			}
 		})
 	}
 }]);
 	
-appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session',
-  function ($scope, $http, $location, Session) {
+appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session', 'navigate',
+  function ($scope, $http, $location, Session, navigate) {
 	if (Session.id != 0909)
 		$location.path("/login")
+	$scope.Session = Session;
+	console.log($scope.Session)
+	$scope.navigate = navigate;
 	$scope.deleteForm = {};
 	$scope.hideGroupForm = true;
 	$scope.hideDeleteForm = true;
 	$scope.newGroupSkills = {};
-	$scope.skillLevels = ["none", "weak", "average", "strong", "expert"]
     $http.get(database + '/skills').success(function(data) {
     	$scope.skillsByGroup = data;
     	console.log(data)
@@ -150,15 +155,18 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
 		$scope.hideDeleteForm = true;
 		$scope.deleteForm = {};
 	}
-}]);
+}])
 
-appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParams',
-  function ($scope, $http, $routeParams) {
+
+appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParams', 'Session', 'navigate',
+  function ($scope, $http, $routeParams, Session, navigate) {
+	$scope.navigate = navigate;
+	$scope.Session = Session;
 	var accountID = $routeParams.id
-	console.log(accountID)
+	if(!(Session.id == accountID || Session.id == 0909))
+		navigate.login()
 	$http.get(database + '/user/'+ accountID + '/name').success(function(data) {
 		$scope.account_name = data.name
-		console.log($scope.account_name)
 	})
 	$scope.skillLevels = ["none", "weak", "average", "strong", "expert"]
     $http.get(database + '/skills/' + accountID).success(function(data) {

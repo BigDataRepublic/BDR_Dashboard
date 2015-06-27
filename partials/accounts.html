@@ -1,0 +1,81 @@
+<div navbar></div>
+
+<!-- FORM FOR ADDING ACCOUNTS -->
+<div class="FormBackground" ng-hide="hideAccountForm">
+	<div id="groupForm" class="panel panel-default">
+		<span class="glyphicon glyphicon-remove-sign upperCornerCloser" aria-hidden="false" ng-click="closeAccountForm()"></span>
+	  <div class="panel-heading">
+	    <h3 class="panel-title">ADDING ACCOUNT</h3>
+	  </div>
+	  <div class="panel-body">
+	  	<div class="row">
+	  		<div class="col-md-12">
+	  			<h2>Account</h2>
+				<input type="text" ng-model="newAccount.name" placeholder="Account name"></BR>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Info</h2>
+			</div>
+		</div>
+		<div class="row" ng-repeat="info in accountInfo">
+			<div class="col-md-3">
+				<input type="text" class="form-control" ng-model="newAccount[info]" placeholder="{{info}}">
+			</div>
+		</div>
+		<div class="row" style="margin-top:10px">
+			<div class="col-md-12"><BUTTON class="btn btn-primary" ng-click="createAccount(newAccount)">Create account</BUTTON></div>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<!-- FORM FOR DELETION CONFIRMATION -->
+<div class="FormBackground" ng-hide="hideDeleteConfirmation">
+	<div id="deleteForm">
+		<span class="glyphicon glyphicon-remove-sign upperCornerCloser" aria-hidden="false" ng-click="closeDelteConfirmation()"></span>
+		<div class="FormBody">
+			<div class="row">
+				<div class="col-md-12">
+					Are you sure you want to delete the {{accountToDelete}} account?
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<span class="center">
+						<BUTTON class="btn btn-success btn-lg" ng-click="deleteItem()">YES</BUTTON>
+						<BUTTON class="btn btn-danger btn-lg" ng-click="closeDelteConfirmation()">NO</BUTTON>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<H1>Manage accounts</H1>
+	</div>
+</div>
+<div id="accounts">
+	<div class="row" style="margin-bottom: 10px;">
+		<div class="col-md-12"><BUTTON class="btn btn-primary" ng-click="openAccountForm()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add account</BUTTON></div>
+	</div>
+	Click on an account to view its skill-matrix
+	<div class="row">
+		<div class="col-md-3"><h3>Name</h3></div>
+		<div class="col-md-3"><h3>E-mail</h3></div>
+		<div class="col-md-3"><h3>Phone</h3></div>
+		<div class="col-md-3"><h3>Creation date</h3></div>
+	</div>
+	<div class="row iconButton" ng-click="navigate.skillMatrix(data.id)" ng-repeat="(account, data) in accounts">
+		<div class="col-md-3"><span class="glyphicon glyphicon-trash iconButton" ng-click="openDeleteConfirmation(account)"></span> {{account}}</div>
+		<div class="col-md-3">{{data.email}}</div>
+		<div class="col-md-3">{{data.phone}}</div>
+		<div class="col-md-3">{{data.date}}</div>
+	</div>
+	<div class="row" style="margin-top: 5px;">
+		<div class="col-md-12"><BUTTON class="btn btn-primary" ng-click="openAccountForm()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add account</BUTTON></div>
+	</div>
+</div>

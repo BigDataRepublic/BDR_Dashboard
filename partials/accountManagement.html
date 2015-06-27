@@ -1,0 +1,22 @@
+<div navbar></div>
+<div class="row">
+	<div class="col-md-12"><H1>{{Session.name}}</H1></div>
+</div>
+<div class="row" style="margin-top: 10px;" ng-repeat="(field, info) in accountInfo">
+	<div class="col-md-1">
+		{{field}}
+	</div>
+	<div class="col-md-3">
+		<input type="text" class="form-control" ng-model="accountInfo[field]" value="{{info}}">
+	</div>
+</div>
+<div class="row" style="margin-top: 10px;" ng-hide="hideSaveSuccess">
+	<div class="col-md-3">
+		Saved successfully
+	</div>
+</div>
+<div class="row" style="margin-top: 10px;">
+	<div class="col-md-3">
+		<BUTTON class="btn btn-primary" ng-click="editAccount()">Save changes</BUTTON><BUTTON class="btn btn-warning" ng-click="navigate.skillMatrix(Session['id'])">Exit</BUTTON>
+	</div>
+</div>

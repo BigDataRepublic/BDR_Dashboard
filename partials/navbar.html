@@ -1,0 +1,38 @@
+<!-- NAVBAR --> 
+<nav ng-switch on="Session['type']" class="navbar navbar-default navbar-fixed-top"> 
+  <div class="container"> 
+    <div class="navbar-header"> 
+      <a class="navbar-brand"> 
+        <img src="/lib/img/Logo-BigData.png"  height="30">
+      </a> 
+    </div> 
+    <case ng-switch-when="admin">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
+      <ul class="nav navbar-nav"> 
+      	<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a ng-click="navigate.accountManagement()">Edit account</a></li>
+            <li><a ng-click="navigate.login()">Log out</a></li>
+          </ul>
+        </li>
+      	<li><a class="iconButton" ng-click="navigate.skills()">Skills</a></li> 
+      	<li><a class="iconButton" ng-click="navigate.accounts()">accounts</a></li> 
+      </ul> 
+    </div> 
+    </case>
+    <case ng-switch-when="client">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
+      <ul class="nav navbar-nav"> 
+      	<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Session.name}}<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a ng-click="navigate.accountManagement(Session['id'])">Edit account</a></li>
+            <li><a ng-click="navigate.login()">Log out</a></li>
+          </ul>
+        </li>
+      </ul> 
+    </div> 
+    </case>
+  </div> 
+</nav>
