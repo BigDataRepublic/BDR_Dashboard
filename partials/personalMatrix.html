@@ -13,11 +13,22 @@
 			  </div>
 			  <div class="panel-body">
 			    <div class="row skill" ng-repeat='(skillIndex, skill) in skills'>
-					<div class="col-md-2">{{skill.skill}}</div>
-					<div class="col-md-1" ng-repeat="(index, level) in skillLevels"><BUTTON class="btn {{buttonStyle(index, skill.score)}} skillbutton" ng-click="scoreSkill(group, skillIndex, index)">{{level}}</BUTTON></div>
+					<div class="col-sm-2">{{skill.skill}}</div>
+					<div class="col-sm-2" ng-repeat="(index, level) in skillLevels"><BUTTON class="btn {{buttonStyle(index + 1, skill.score)}} skillbutton" ng-click="scoreSkill(group, skillIndex, index + 1)">{{level}}</BUTTON></div>
 				</div>
 			  </div>
 			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<h3>Remarks</h3>
+			<textarea cols="40" rows="5" name="remarks" ng-model="remarks" placeholder="Put your personal remarks here."></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<BUTTON class="btn btn-primary" ng-click="saveMatrix()">Save matrix</BUTTON><h4 ng-hide="hideSaveSuccess">Matrix saved</h4>
 		</div>
 	</div>
 </div>

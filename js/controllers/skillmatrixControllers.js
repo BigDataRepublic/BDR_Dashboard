@@ -160,15 +160,21 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
 
 appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParams', 'Session', 'navigate',
   function ($scope, $http, $routeParams, Session, navigate) {
+	$scope.hideSaveSuccess = true;
 	$scope.navigate = navigate;
 	$scope.Session = Session;
 	var accountID = $routeParams.id
 	//if(!(Session.id == accountID || Session.id == 0909))
 		//navigate.login()
+	
+	$http.get(database + "/user/"+accountID+"/remark").success(function(result) {
+		console.log(result)
+		$scope.remarks = result.remark
+	})
 	$http.get(database + '/user/'+ accountID + '/name').success(function(data) {
 		$scope.account_name = data.name
 	})
-	$scope.skillLevels = ["none", "weak", "average", "strong", "expert"]
+	$scope.skillLevels = ["Basic","Moderate","Advanced","Strong","Expert"] //["none", "weak", "average", "strong", "expert"]
     $http.get(database + '/skills/' + accountID).success(function(data) {
     	console.log(data)
     	$scope.skillsByGroup = data;
@@ -188,6 +194,13 @@ appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParam
 			$scope.skillsByGroup[group][skill].score = score;
 		})
 	}
+	
+	$scope.saveMatrix = function() {
+		$http.post(database + "/addRemark/"+accountID+"/"+$scope.remarks).success(function(result) {
+			$scope.hideSaveSuccess = false;
+			console.log(result)
+		})
+	}	
 	
 	$scope.print = function(){
 		window.print()
