@@ -23,6 +23,10 @@ app.config(['$routeProvider',
         	templateUrl: 'partials/personalMatrix.html',
         	controller: 'personalMatrixCtrl'
         }).
+        when('/skillMatrix/:id/print', {
+        	templateUrl: 'partials/printMatrix.html',
+        	controller: 'printMatrixCtrl'
+        }).
         when('/account/:id', {
         	templateUrl: 'partials/accountManagement.html',
         	controller: 'accountManagementCtrl'
@@ -64,6 +68,10 @@ app.factory('navigate', function($location, Session) {
   
   navigate.skillMatrix = function(id){
 	  $location.path("skillMatrix/" + id)
+  }
+  
+  navigate.print = function(id){
+	  $location.path("skillMatrix/" + id + "/print")
   }
   // factory function body that constructs shinyNewServiceInstance
   return navigate;

@@ -1,0 +1,39 @@
+<div navbar></div>
+<div id="skillMatrix">
+	<div class="row">
+		<div class="col-xs-12">
+			<H1>Skill matrix {{account_name}}</H1>
+		</div>
+	</div>
+	<div id="contact-info" style="margin-bottom: 15px;">
+		<div class="row">
+			<div class="col-xs-1">E-mail</div>
+			<div class="col-xs-11">{{accountInfo['e-mail']}}</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-1">Telephone</div>
+			<div class="col-xs-11">{{accountInfo.telephone}}</div>
+		</div>
+	</div>
+	<div class="row" ng-repeat='(group, skills) in skillsByGroup'>
+		<div class="col-xs-12 skillGroup">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">{{group}}</h3>
+			  </div>
+			  <div class="panel-body">
+			    <div class="row skill" ng-repeat='(skillIndex, skill) in skills'>
+					<div class="col-xs-2">{{skill.skill}}</div>
+					<div class="col-xs-2" ng-repeat="(index, level) in skillLevels"><BUTTON class="btn {{buttonStyle(index + 1, skill.score)}} skillbutton" ng-click="scoreSkill(group, skillIndex, index + 1)">{{level}}</BUTTON></div>
+				</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<h3>Remarks</h3>
+			<textarea cols="40" rows="5" name="remarks" ng-model="remarks" placeholder="Put your personal remarks here."></textarea>
+		</div>
+	</div>
+</div>

@@ -181,8 +181,8 @@ appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParam
 	$scope.navigate = navigate;
 	$scope.Session = Session;
 	var accountID = $routeParams.id
-	//if(!(Session.id == accountID || Session.id == 0909))
-		//navigate.login()
+	if(!(Session.id == accountID || Session.id == 0909))
+		navigate.login()
 	
 	$http.get(database + "/user/"+accountID+"/remark").success(function(result) {
 		console.log(result)
@@ -220,6 +220,37 @@ appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParam
 	}	
 	
 	$scope.print = function(){
-		window.print()
+		navigate.print(accountID);
 	}
 }]);
+
+appControllers.controller('printMatrixCtrl', ['$scope', '$http', '$routeParams', 'navigate',
+function ($scope, $http, $routeParams, navigate) {
+   	$scope.navigate = navigate;
+   	var accountID = $routeParams.id
+   	
+   	$scope.skillLevels = ["Basic","Moderate","Advanced","Strong","Expert"]
+   $http.get(database + '/skills/' + accountID).success(function(data) {
+   	$scope.skillsByGroup = data;
+ 	$http.get(database + "/user/" + accountID).success(function(data) {
+		$scope.accountInfo = {"e-mail": data.email, "telephone": data.phone}
+		$http.get(database + '/user/'+ accountID + '/name').success(function(data) {
+	   		$scope.account_name = data.name
+	   		$http.get(database + "/user/"+accountID+"/remark").success(function(result) {
+	   	   		console.log(result)
+	   	   		$scope.remarks = result.remark
+	   	   		window.print()
+	   	   		navigate.skillMatrix(accountID);
+	   	   	})
+	   	})
+	});
+   })
+   	
+   	$scope.buttonStyle = function(level, score) {
+   		if(level <= score)
+   			return "btn-success";
+   		else
+   			return "btn-default";
+   	}
+   		
+   }]);
