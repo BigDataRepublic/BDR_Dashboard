@@ -12,6 +12,13 @@ Object.size = function(obj) {
 	
 appControllers.controller('adminLoginCtrl', ['$scope', '$http', '$location', 'Session',
 function ($scope, $http, $location, Session) {
+	$scope.account = {};
+	$("body").keyup(function(event){
+	    if(event.keyCode == 13){
+	    	$scope.checkLogin($scope.account.name, $scope.account.password)
+	    }
+	});
+	
 	$scope.Session = Session;
 	$scope.hideError = true;
 	$scope.checkLogin = function(name, password) {
@@ -34,9 +41,18 @@ function ($scope, $http, $location, Session) {
 
 appControllers.controller('loginCtrl', ['$scope', '$http', '$location', 'Session',
   function ($scope, $http, $location, Session) {
+	$scope.account = {};
+	$("body").keyup(function(event){
+		console.log("ENTER HIT")
+	    if(event.keyCode == 13){
+	    	$scope.checkLogin($scope.account.name, $scope.account.password)
+	    }
+	});
+	
 	$scope.Session = Session;
 	$scope.hideError = true;
 	$scope.checkLogin = function(name, password) {
+		console.log(name + password)
 		$http.get(database + "/user/"+name+"/password/"+password).success(function(result) {
 			if(Object.size(result) == 0)
 				$scope.hideError = false;
@@ -44,7 +60,7 @@ appControllers.controller('loginCtrl', ['$scope', '$http', '$location', 'Session
 				Session['id'] = result.id; 
 				Session['type'] = "client";
 				Session['name'] = name
-				$location.path("/skillMatrix/"+Session.id)
+				$location.path("/skillMatrix/"+result.id)
 			}
 		})
 	}

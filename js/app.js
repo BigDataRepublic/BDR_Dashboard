@@ -43,7 +43,7 @@ app.factory('navigate', function($location, Session) {
   var navigate = {};
   
   navigate.login = function(){
-	  Session = {};
+	  delete Session;
 	  $location.path("/login")
   };
   
@@ -58,6 +58,7 @@ app.factory('navigate', function($location, Session) {
   };
   
   navigate.accountManagement = function(id){
+	  console.log("Account management")
 	  $location.path("/account/" + id)
   };
   
