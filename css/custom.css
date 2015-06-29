@@ -4,8 +4,28 @@
 }
 
 body {
-	margin-top: 40px;
+	margin-top: 84px;
+	margin-bottom: 40px;
 	font-family: "BDR font";
+}
+
+.navbar {
+	height: 84px;
+	padding-top:33px;
+	padding-right:10px;
+}
+
+.navbar a:active {
+	font-weight: bold;
+}
+
+.vertical-center {
+	top: 5px;
+	position: relative;
+}
+
+item:hover {
+	font-weight: bold;	
 }
 
 .skillbutton {
