@@ -48,6 +48,12 @@ body {
 	margin-top: 10%;
 }
 
+#skillList {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	max-height: 200px;
+}
+
 #deleteForm {
 	width: 20%;
 	min-height: 20%;
