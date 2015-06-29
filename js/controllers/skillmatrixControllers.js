@@ -43,7 +43,6 @@ appControllers.controller('loginCtrl', ['$scope', '$http', '$location', 'Session
   function ($scope, $http, $location, Session) {
 	$scope.account = {};
 	$("body").keyup(function(event){
-		console.log("ENTER HIT")
 	    if(event.keyCode == 13){
 	    	$scope.checkLogin($scope.account.name, $scope.account.password)
 	    }
@@ -248,7 +247,7 @@ function ($scope, $http, $routeParams, navigate) {
    	
    	$scope.buttonStyle = function(level, score) {
    		if(level <= score)
-   			return "btn-success";
+   			return "btn-success print";
    		else
    			return "btn-default";
    	}

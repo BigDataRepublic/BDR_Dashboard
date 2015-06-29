@@ -103,3 +103,7 @@ item:hover {
 	top: -7px;
 	cursor: pointer;
 }
+
+.print {
+	background-color: green;	
+}
