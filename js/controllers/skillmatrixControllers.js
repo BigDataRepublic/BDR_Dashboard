@@ -204,9 +204,8 @@ appControllers.controller('personalMatrixCtrl', ['$scope', '$http', '$routeParam
 	}
 	
 	$scope.scoreSkill = function(group, skill, score) {
-		var skillName = $scope.skillsByGroup[group][skill].skill;
-		$http.post(database + '/skills/score/' + skillName + '/' + score + '/' + accountID).success(function(reply) {
-			console.log(skillName + " scored for " + score);
+		$http.post(database + '/skills/score/' + skill + '/' + score + '/' + accountID).success(function(reply) {
+			console.log(skill + " scored for " + score);
 			$scope.skillsByGroup[group][skill].score = score;
 		})
 	}
