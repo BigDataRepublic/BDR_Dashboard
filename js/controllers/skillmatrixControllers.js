@@ -77,6 +77,8 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
 	$scope.hideDeleteForm = true;
 	$scope.newGroupSkills = {};
 	$scope.addingSkill = {};
+	$scope.examples = {};
+	
     $http.get(database + '/skills').success(function(data) {
     	$scope.skillsByGroup = data;
     	console.log(data)
@@ -85,6 +87,13 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
     		$scope.skillForms[group] = true;
     	console.log($scope.skillForms)
     })
+    
+    $http.get(database + '/examples').success(function(exampleData) {
+    	for(skill in exampleData) {
+    	$scope.examples[skill] = exampleData[skill];
+    	console.log($scope.examples)
+    	}
+    });
 	
     $scope.addSkillForm = function(group) {
 		console.log("Opening skillForm for " + group)
@@ -121,6 +130,14 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
 		$scope.hideGroupForm = true;
 		$scope.newGroupSkills = {};
 		$scope.newGroupName = "";
+	}
+	
+	$scope.addExamples = function(skillName) {
+		examples = $scope.examples[skillName]
+		console.log("Adding " + examples + " to " + skillName)
+		$http.post(database + "/addExamples/"+skillName+"/"+examples).success(function(reply) {
+			console.log(reply)
+		})
 	}
 	
 	$scope.closeGroupForm = function(){
