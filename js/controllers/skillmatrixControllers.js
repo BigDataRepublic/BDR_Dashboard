@@ -112,6 +112,25 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
 			$scope.addingSkill[group] = "";
 		})
 	}
+
+	$scope.renameSkill = function(skillName, newSkill) {
+		console.log("Renaming skill " + skillName + " to " + newSkill)
+		if(skillName == newSkill)
+			return;
+		$http.post(database + '/renameSkill/' + skillName + '/' + newSkill).success(function(reply) {
+			console.log(reply)
+			for (group in $scope.skillsByGroup){
+				if (skillName in $scope.skillsByGroup[group]){
+					delete $scope.skillsByGroup[group][skillName];
+					$scope.skillsByGroup[group][newSkill] = newSkill
+				}
+			}
+			examples = $scope.examples[skillName]
+			delete $scope.examples[skillName]
+			$scope.examples[newSkill] = examples
+		})
+	}
+
 	
 	$scope.openGroupForm = function() {
 		console.log("Opening add group form");
@@ -165,7 +184,7 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
 		        	var skill = $scope.skillsByGroup[name][skillKey]
 		        	console.log("deleting skill " + skill)
 		        	$http.post(database + "/deleteSkill/" + name + "/" + skill).success(function(data) {
-		        		console.log("Delte successful")
+		        		console.log("Delete successful")
 		        	})
 		        }
 		        delete $scope.skillsByGroup[name]
