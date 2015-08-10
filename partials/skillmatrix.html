@@ -84,11 +84,20 @@
 		  </div>
 		  <div class="panel-body">
 			<div class="row skill" ng-repeat='skillName in skills'>
-				<div class="col-md-3 skill">
-				<span style="font-weight: bold;">{{skillName}}</span><br>
+				<div class="col-md-3 skill" ng-init="editingSkill[skillName]=false">
+					<span ng-hide="editingSkill[skillName]">
+						<span style="font-weight: bold;">{{skillName}}</span>
+						<span class="glyphicon glyphicon-pencil iconButton" ng-click="editingSkill[skillName]=true"></span>
+						<span class="glyphicon glyphicon-trash iconButton" ng-click="openDeleteConfirmation('skill', skillName, group)"></span>
+					</span>
+					<span ng-show="editingSkill[skillName]">
+						<input type="text" value="{{skillName}}" ng-model="newSkill" ng-init="newSkill=skillName"/>
+						<button class="btn btn-sm btn-primary" ng-click="renameSkill(skillName, newSkill); editingSkill[skillName]=false">save</button>
+					</span>
+					<br>
 					<span class="examples">exp: <input type="text" ng-model="examples[skillName]"><button class="btn btn-sm btn-primary" ng-click="addExamples(skillName)">save</button></span>
 				</div>
-				<div class="col-md-2"><span style="font-size: 30px;" class="glyphicon glyphicon-trash iconButton" ng-click="openDeleteConfirmation('skill', skillName, group)"></span>
+				<div class="col-md-2">
 				</div>
 			</div>
 		  </div>
