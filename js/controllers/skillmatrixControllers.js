@@ -62,8 +62,8 @@ appControllers.controller('loginCtrl', ['$scope', '$http', '$location', 'Session
 	}
 }]);
 	
-appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session', 'navigate',
-  function ($scope, $http, $location, Session, navigate) {
+appControllers.controller('adminCtrl', ['$scope', '$resource', '$http','$location', 'Session', 'navigate',
+  function ($scope, $resource, $http, $location, Session, navigate) {
 	if (Session.id != 0909)
 		$location.path("/login")
 	$scope.Session = Session;
@@ -75,6 +75,11 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
 	$scope.newGroupSkills = {};
 	$scope.addingSkill = {};
 	$scope.examples = {};
+
+	var SkillService = $resource(
+		    database + '/skill/:skill', {},
+		    {rename: {method: 'Get', url: database + '/skill/:skill/rename/:newname'} }
+		    );
 	
     $http.get(database + '/skills').success(function(data) {
     	$scope.skillsByGroup = data;
@@ -114,18 +119,19 @@ appControllers.controller('adminCtrl', ['$scope', '$http','$location', 'Session'
 		console.log("Renaming skill " + skillName + " to " + newSkill)
 		if(skillName == newSkill)
 			return;
-		$http.post(database + '/renameSkill/' + skillName + '/' + newSkill).success(function(reply) {
-			console.log(reply)
-			for (group in $scope.skillsByGroup){
-				if (skillName in $scope.skillsByGroup[group]){
-					delete $scope.skillsByGroup[group][skillName];
-					$scope.skillsByGroup[group][newSkill] = newSkill
-				}
-			}
-			examples = $scope.examples[skillName]
-			delete $scope.examples[skillName]
-			$scope.examples[newSkill] = examples
-		})
+		var skill_service = new SkillService()
+		var skill = skill_service.$rename({skill: skillName, newname: newSkill},
+		    function() {
+                for (group in $scope.skillsByGroup){
+                    if (skillName in $scope.skillsByGroup[group]){
+                        delete $scope.skillsByGroup[group][skillName];
+                        $scope.skillsByGroup[group][newSkill] = newSkill
+                    }
+                }
+                examples = $scope.examples[skillName]
+                delete $scope.examples[skillName]
+                $scope.examples[newSkill] = examples
+		    })
 	}
 
 	
