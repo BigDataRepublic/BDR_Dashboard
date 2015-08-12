@@ -1,4 +1,3 @@
-var database = "http://bdr-skillmatrix-api.elasticbeanstalk.com";
 var accountInfo = ["password", "email", "telephone"];
 
 function parseDate(date) {

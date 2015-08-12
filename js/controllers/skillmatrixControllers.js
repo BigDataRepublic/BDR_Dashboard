@@ -1,6 +1,3 @@
-//var database = "http://localhost:5000"
-var database = "http://bdr-skillmatrix-api.elasticbeanstalk.com"
-
 Object.size = function(obj) {
 	var size = 0, key;
 	for(key in obj) {
